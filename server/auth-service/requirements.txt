@@ -1,0 +1,7 @@
+fastapi>=0.95.0,<0.96.0
+uvicorn>=0.21.1,<0.22.0
+pyjwt[crypto]>=2.6.0
+passlib>=1.7.4
+python-multipart>=0.0.6
+sqlalchemy>=1.4.0
+psycopg2-binary>=2.9.0

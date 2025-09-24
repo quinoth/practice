@@ -1,0 +1,279 @@
+project-root/
+│
+├── README.md                          # Основное описание проекта
+├── LICENSE                            # Лицензия MIT (Open Source)
+├── .gitignore                         # Файлы, исключённые из репозитория
+├── Makefile                           # Утилиты для быстрого запуска
+│
+├── client/                            # Фронтенд (React + TypeScript + Vite)
+│   ├── public/
+│   │   └── index.html                 # Точка входа
+│   │
+│   ├── src/
+│   │   ├── components/                # Компоненты UI
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── RoleSwitcher.tsx       # Переключатель ролей
+│   │   │
+│   │   ├── pages/                     # Страницы приложения
+│   │   │   ├── Home.tsx               # Главная
+│   │   │   ├── AuthPage.tsx           # Авторизация
+│   │   │   ├── DashboardPage.tsx      # Общий дашборд
+│   │   │   ├── AdminDashboard.tsx     # Админ панель
+│   │   │   ├── PsychologistDashboard.tsx  # Психолог
+│   │   │   ├── ClientDashboard.tsx    # Клиент
+│   │   │   └── AnalyticsPage.tsx      # Аналитика
+│   │   │
+│   │   ├── services/                  # API клиенты
+│   │   │   ├── apiClient.ts           # REST клиент
+│   │   │   └── wsClient.ts            # WebSocket клиент
+│   │   │
+│   │   ├── store/                     # Redux Toolkit
+│   │   │   ├── slices/
+│   │   │   │   ├── authSlice.ts
+│   │   │   │   ├── testSlice.ts
+│   │   │   │   └── documentSlice.ts
+│   │   │   └── store.ts               # Настройка хранилища
+│   │   │
+│   │   ├── utils/                     # Вспомогательные функции
+│   │   │   ├── helpers.ts
+│   │   │   └── logger.ts
+│   │   │
+│   │   ├── App.tsx                    # Главный компонент
+│   │   └── main.tsx                   # Точка входа
+│   │
+│   ├── vite.config.ts                 # Конфиг Vite
+│   ├── tsconfig.json                  # Конфиг TypeScript
+│   └── package.json                   # Зависимости (Yarn / npm)
+│
+├── server/                            # Бэкенд (FastAPI микросервисы)
+│   │
+│   ├── auth-service/                  # Авторизация и регистрация
+│   │   ├── app/
+│   │   │   ├── main.py                # Точка входа FastAPI
+│   │   │   ├── routes/
+│   │   │   │   ├── auth.py            # Роуты авторизации
+│   │   │   │   └── users.py           # Регистрация и управление
+│   │   │   ├── models/
+│   │   │   │   ├── user.py            # Модель пользователя
+│   │   │   │   └── token.py           # JWT модели
+│   │   │   ├── core/
+│   │   │   │   └── security.py        # Хэширование, проверка прав
+│   │   │   └── utils/
+│   │   │       └── password.py        # Генерация паролей
+│   │   ├── tests/
+│   │   │   ├── test_auth.py
+│   │   │   └── conftest.py
+│   │   └── Dockerfile
+│   │
+│   ├── user-service/                  # Управление пользователями
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── users.py           # CRUD пользователей
+│   │   │   │   └── roles.py           # Управление ролями
+│   │   │   ├── models/
+│   │   │   │   ├── user.py
+│   │   │   │   └── role.py
+│   │   │   └── schemas/
+│   │   │       ├── user_schemas.py    # Pydantic модели
+│   │   │       └── role_schemas.py
+│   │   ├── tests/
+│   │   │   └── test_users.py
+│   │   └── Dockerfile
+│   │
+│   ├── test-service/                  # Психологические тесты
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── tests.py           # Получение и прохождение тестов
+│   │   │   │   └── results.py         # Сохранение результатов
+│   │   │   ├── models/
+│   │   │   │   ├── test.py
+│   │   │   │   └── result.py
+│   │   │   └── schemas/
+│   │   │       ├── test_schemas.py
+│   │   │       └── result_schemas.py
+│   │   └── Dockerfile
+│   │
+│   ├── chat-service/                  # Чат между клиентом и психологом
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── chat.py            # WebSocket чат
+│   │   │   │   └── history.py         # История сообщений
+│   │   │   ├── models/
+│   │   │   │   └── message.py
+│   │   │   └── services/
+│   │   │       └── chat_service.py    # Логика обработки чата
+│   │   └── Dockerfile
+│   │
+│   ├── consultation-service/          # Запись на консультации
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── schedule.py        # Расписание
+│   │   │   │   └── history.py         # История консультаций
+│   │   │   ├── models/
+│   │   │   │   └── consultation.py
+│   │   │   └── services/
+│   │   │       └── notification_service.py
+│   │   └── Dockerfile
+│   │
+│   ├── document-service/              # Документооборот
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── documents.py       # Загрузка, просмотр, подпись
+│   │   │   │   └── templates.py       # Шаблоны документов
+│   │   │   ├── models/
+│   │   │   │   └── document.py
+│   │   │   └── services/
+│   │   │       └── document_service.py
+│   │   └── Dockerfile
+│   │
+│   ├── ai-assistant/                  # ИИ-ассистент
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── analysis.py        # Анализ текста
+│   │   │   │   └── recommendations.py # Рекомендации
+│   │   │   ├── models/
+│   │   │   │   ├── nlp_model.py       # NLP модель
+│   │   │   │   └── emotion_model.py   # Анализ эмоций
+│   │   │   └── services/
+│   │   │       └── inference.py       # Вызов моделей
+│   │   └── Dockerfile
+│   │
+│   ├── bot-service/                   # ИИ-чатбот
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   └── bot.py            # API бота
+│   │   │   ├── models/
+│   │   │   │   ├── intent_classifier.py # Классификация намерений
+│   │   │   │   └── response_generator.py # Генерация ответов
+│   │   │   └── services/
+│   │   │       └── bot_service.py
+│   │   └── Dockerfile
+│   │
+│   ├── analytics-service/             # Аналитика и отчёты
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── reports.py         # Отчёты по регионам, пользователям
+│   │   │   │   └── stats.py           # Статистика использования
+│   │   │   ├── models/
+│   │   │   │   └── report.py
+│   │   │   └── services/
+│   │   │       └── clickhouse_client.py # Подключение к ClickHouse
+│   │   └── Dockerfile
+│   │
+│   ├── video-service/                 # Видеоконсультации
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   └── video.py           # Интеграция с BigBlueButton SDK
+│   │   │   ├── models/
+│   │   │   │   └── room.py
+│   │   │   └── services/
+│   │   │       └── bbb_integration.py # Подключение к BBB
+│   │   └── Dockerfile
+│   │
+│   ├── notification-service/          # Уведомления
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── routes/
+│   │   │   │   ├── email.py           # Email-уведомления
+│   │   │   │   └── push.py            # Push-уведомления
+│   │   │   ├── models/
+│   │   │   │   └── notification.py
+│   │   │   └── services/
+│   │   │       └── rabbitmq_consumer.py # Обработка через RabbitMQ
+│   │   └── Dockerfile
+│   │
+│   ├── shared/                        # Общие библиотеки
+│   │   ├── schemas/
+│   │   │   ├── user_schemas.py
+│   │   │   └── token_schemas.py
+│   │   ├── config/
+│   │   │   ├── database.py            # Подключение к PostgreSQL
+│   │   │   └── settings.py            # Настройки приложения
+│   │   └── utils/
+│   │       ├── logger.py
+│   │       └── permissions.py         # RBAC, проверка прав
+│   │
+│   └── docker-compose.yml             # Локальная разработка
+│
+├── infra/                             # Инфраструктура
+│   ├── kubernetes/                    # Kubernetes манифесты
+│   │   ├── deployments/
+│   │   │   ├── auth-deployment.yaml
+│   │   │   ├── ai-assistant-deployment.yaml
+│   │   │   └── ...
+│   │   │
+│   │   ├── services/
+│   │   │   ├── auth-service.yaml
+│   │   │   └── ai-assistant-service.yaml
+│   │   │
+│   │   └── configmaps/
+│   │       └── env-config.yaml        # Переменные окружения
+│   │
+│   ├── helm/                          # Helm-чарты
+│   │   └── cprk/
+│   │       ├── Chart.yaml
+│   │       ├── values.yaml
+│   │       └── templates/
+│   │           ├── deployment.yaml.gotmpl
+│   │           └── service.yaml.gotmpl
+│   │
+│   └── terraform/                    # IaC (опционально)
+│       └── aws-gcp/
+│           ├── main.tf
+│           └── variables.tf
+│
+├── database/                          # Базы данных
+│   ├── migrations/                    # Alembic миграции
+│   │   ├── versions/
+│   │   │   ├── 001_initial.py
+│   │   │   └── 002_add_role_table.py
+│   │   └── alembic.ini
+│   │
+│   ├── seeders/                       # Начальные данные
+│   │   └── initial_data.sql
+│   │
+│   └── scripts/                       # Вспомогательные скрипты
+│       └── generate_report.py         # Пример скрипта
+│
+├── ai/                                # ИИ-модели
+│   ├── models/
+│   │   ├── nlp/
+│   │   │   └── sentiment_analysis.py  # Анализ тональности
+│   │   └── emotion/
+│   │       └── emotion_recognition.py # Анализ эмоций
+│   │
+│   └── training/
+│       ├── datasets/
+│       │   └── test_dataset.csv
+│       └── train.py                   # Обучение модели
+│
+├── monitoring/                        # Мониторинг и метрики
+│   ├── metabase/                       # Дашборды metabase
+│   │   └── dashboards/
+│   │       └── system_overview.json
+│   │
+│   ├── prometheus/                    # Конфигурация Prometheus
+│   │   └── prometheus.yaml
+│   │
+│   └── loki/                        # Логирование
+│       └── config.yaml
+│
+├── docs/                              # Техническая документация
+│   ├── architecture.md                # Архитектура системы
+│   ├── api-spec/                      # OpenAPI спецификации
+│   │   ├── auth.yaml
+│   │   └── ai.yaml
+│   └── deployment.md                # Инструкции по развёртыванию
+│
+├── .gitlab-ci.yml                    # CI/CD pipeline
+└── .env                              # Файлы окружения

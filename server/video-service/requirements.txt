@@ -1,0 +1,7 @@
+fastapi>=0.95.0,<0.96.0
+uvicorn>=0.21.1,<0.22.0
+websockets>=10.4
+confluent-kafka>=2.0.2
+sqlalchemy>=1.4.0
+pydantic>=2.0.0
+shared==0.1.0        # или `-e ../shared` при локальной разработке
